@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const BASE = process.env.EXPO_PUBLIC_STORY_BASE || '/story';
+const BASE = process.env.EXPO_PUBLIC_STORY_BASE || 'story';
 const MANIFEST_URL = `${BASE}/manifest.json`;
 const CACHE_KEY = 'vn_story_cache_v1';
 
