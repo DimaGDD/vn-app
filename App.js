@@ -1,20 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import NovelScreen from './src/screens/NovelScreen';
+
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    return (
+        <SafeAreaProvider>
+            <SafeAreaView style={styles.safe}>
+                <NovelScreen />
+            </SafeAreaView>
+        </SafeAreaProvider>
+    )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    safe: {
+        flex: 1,
+        backgroundColor: '#0d0d16',
+    },
 });

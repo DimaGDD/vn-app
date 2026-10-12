@@ -1,0 +1,66 @@
+{
+  "start": "intro",
+  "nodes": {
+    "intro": {
+      "art": "art/start.png",
+      "text": "Ты просыпаешься на опушке леса. В руке — странный амулет.",
+      "choices": [
+        { "text": "Пойти в лес", "next": "forest" },
+        { "text": "Осмотреть амулет", "next": "amulet" }
+      ]
+    },
+    "amulet": {
+      "art": "art/start.png",
+      "text": "Амулет тёплый. На обратной стороне выгравировано слово «Помни».",
+      "effects": { "hasAmulet": true, "reputation": 1 },
+      "choices": [
+        { "text": "Идти в лес", "next": "forest" }
+      ]
+    },
+    "forest": {
+      "art": "art/forest.png",
+      "text": "Развилка. Слева — пещера, справа — деревня.",
+      "choices": [
+        { "text": "К пещере", "next": "cave" },
+        { "text": "В деревню", "next": "village" }
+      ]
+    },
+    "cave": {
+      "art": "art/cave.png",
+      "text": "В пещере темно. Что-то блестит в глубине.",
+      "effects": { "visitedCave": true, "hp": -10 },
+      "choices": [
+        { "text": "Взять золото", "next": "treasure",
+          "condition": { "hp": { "gte": 20 } } },
+        { "text": "Уйти", "next": "forest" }
+      ]
+    },
+    "treasure": {
+      "art": "art/cave.png",
+      "text": "Ты находишь сундук с золотом.",
+      "effects": { "gold": 50 },
+      "choices": [
+        { "text": "Вернуться в деревню", "next": "village" }
+      ]
+    },
+    "village": {
+      "art": "art/forest.png",
+      "text": "Деревня встречает тебя настороженно.",
+      "choices": [
+        { "text": "Показать амулет", "next": "ending_hero",
+          "condition": { "hasAmulet": true } },
+        { "text": "Уйти ни с чем", "next": "ending_neutral" }
+      ]
+    },
+    "ending_hero": {
+      "art": "art/ending.png",
+      "text": "Старейшина узнаёт амулет. Ты — Избранный.",
+      "ending": "Герой"
+    },
+    "ending_neutral": {
+      "art": "art/ending.png",
+      "text": "Ты уходишь в туман. История продолжается...",
+      "ending": "Странник"
+    }
+  }
+}
