@@ -98,7 +98,7 @@ export default function NovelScreen() {
                     <View>
                         <Text style={styles.endingTitle}>Концовка: {node.ending}</Text>
                         <ChoiceButton
-                            label="Начать заного"
+                            label="Начать заново"
                             onPress={() => {
                                 setState(initialState);
                                 setNodeId(story.start);
