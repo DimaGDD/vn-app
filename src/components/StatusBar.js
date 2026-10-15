@@ -6,8 +6,8 @@ export default function StatusBar({ state }) {
             <Text style={styles.item}>❤️ {state.hp}</Text>
             <Text style={styles.item}>🪙 {state.gold}</Text>
             <Text style={styles.item}>⭐ {state.reputation}</Text>
-            <Text style={styles.item}>{state.hasAmulet ? '🔮' : '—'}</Text>
-            <Text style={styles.item}>{state.visitedCave ? '🕳️' : '—'}</Text>
+            <Text style={styles.item}>{state.hasSpliner ? '🗡️' : '—'}</Text>
+            <Text style={styles.item}>{state.hasBook ? '📖' : '—'}</Text>
         </View>
     );
 }

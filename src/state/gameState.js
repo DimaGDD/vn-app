@@ -2,8 +2,11 @@ export const initialState = {
     hp: 100,
     gold: 0,
     reputation: 0,
-    hasAmulet: false,
-    visitedCave: false,
+    checkedClothes: false,
+    checkedHands: false,
+    checkedBack: false,
+    hasSplinter: false,
+    hasBook: false,
 };
 
 export function applyEffects(state, effects = {}) {
