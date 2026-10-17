@@ -4,6 +4,7 @@ import { loadStory } from '../api/storyLoader';
 import { initialState, applyEffects, checkCondition } from '../state/gameState';
 import ChoiceButton from '../components/ChoiceButton';
 import StatusBar from '../components/StatusBar';
+import CombatScreen from '../components/CombatScreen';
 import { BASE } from '../api/config';
 
 const FONT_FAMILY = Platform.OS === 'ios' ? 'Georgia' : 'serif';
@@ -42,6 +43,10 @@ export default function NovelScreen({ onExitGame }) {
 
     const confirmExit = () => {
         onExitGame();
+    }
+
+    function takeDamage(amount) {
+        setState((s) => applyEffects(s, { hp: -amount }));
     }
 
     async function bootstrap(force = false) {
@@ -149,6 +154,13 @@ export default function NovelScreen({ onExitGame }) {
                                 <Text style={styles.endingTitle}>Концовка: {node.ending}</Text>
                                 <ChoiceButton label="Вернуться в меню" onPress={onExitGame} />
                             </View>
+                        ) : node.type === 'combat' ? (
+                            <CombatScreen 
+                                hp={state.hp}
+                                onDamage={takeDamage}
+                                onWin={() => go(node.winNode)}
+                                onLose={() => go(node.loseNode)}
+                            />
                         ) : (
                             <View style={styles.choicesContainer}>
                                 {choices.map((c, i) => (

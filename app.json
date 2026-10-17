@@ -2,7 +2,7 @@
   "expo": {
     "name": "Witcher: With Flickering Heart",
     "slug": "vn-app",
-    "version": "2.0.0",
+    "version": "4.0.0",
     "orientation": "default",
     "userInterfaceStyle": "dark",
     "icon": "./assets/icon.png",
