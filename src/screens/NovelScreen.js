@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, ActivityIndicator, Platform, Alert } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, ActivityIndicator, Platform, useWindowDimensions } from 'react-native';
 import { loadStory } from '../api/storyLoader';
 import { initialState, applyEffects, checkCondition } from '../state/gameState';
 import ChoiceButton from '../components/ChoiceButton';
@@ -15,6 +15,30 @@ export default function NovelScreen({ onExitGame }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [version, setVersion] = useState(null);
+
+    const { width, height } = useWindowDimensions();
+    const isLandscape = width > height;
+
+    const MAX_WIDTH = 1400;
+    const containerWidth = Math.min(width, MAX_WIDTH) - 32;
+    const containerHeight = height - 80;
+
+    let artWidth, artHeight, textWidth;
+
+    if (isLandscape) {
+        let idealArtWidth = containerWidth * 0.66;
+        let idealArtHeight = idealArtWidth * (9 / 16);
+
+        if (idealArtHeight > containerHeight) {
+            artHeight = containerHeight;
+            artWidth = artHeight * (16 / 9);
+        } else {
+            artWidth = idealArtWidth;
+            artHeight = idealArtHeight;
+        }
+
+        textWidth = containerWidth - artWidth - 20;
+    }
 
     const confirmExit = () => {
         onExitGame();
@@ -42,10 +66,8 @@ export default function NovelScreen({ onExitGame }) {
 
     useEffect(() => {
         const onFocus = () => bootstrap(true);
-
         if (typeof window !== 'undefined' && window.addEventListener) {
             window.addEventListener('focus', onFocus);
-
             return () => window.removeEventListener('focus', onFocus);
         }
     }, []);
@@ -63,6 +85,7 @@ export default function NovelScreen({ onExitGame }) {
             <View style={styles.center}>
                 <Text style={styles.err}>{error}</Text>
                 <ChoiceButton label="Повторить" onPress={() => bootstrap(true)} />
+                <ChoiceButton label="Выйти в меню" onPress={onExitGame} />
             </View>
         );
     }
@@ -72,6 +95,7 @@ export default function NovelScreen({ onExitGame }) {
         return (
             <View style={styles.center}>
                 <Text style={{ color: '#fff', fontFamily: FONT_FAMILY }}>Сцена не найдена</Text>
+                <ChoiceButton label="Выйти в меню" onPress={onExitGame} />
             </View>
         );
     }
@@ -90,8 +114,14 @@ export default function NovelScreen({ onExitGame }) {
         <View style={styles.root}>
             <StatusBar state={state} onExit={confirmExit} />
 
-            <ScrollView contentContainerStyle={styles.scrollContent}>
-                <View style={styles.gameContainer}>
+            <View style={[styles.gameContainer, isLandscape ? styles.gameContainerLandscape : styles.gameContainerPortrait]}>
+                
+                <View style={[
+                    styles.artWrapper,
+                    isLandscape 
+                        ? { width: artWidth, height: artHeight, marginRight: 20 }
+                        : { width: '100%', height: height * 0.35, marginBottom: 15 }
+                ]}>
                     {node.art && (
                         <Image
                             source={{ uri: `${BASE}/${node.art}?v=${version}` }}
@@ -99,18 +129,25 @@ export default function NovelScreen({ onExitGame }) {
                             resizeMode='cover'
                         />
                     )}
+                </View>
 
-                    <View style={styles.textContainer}>
+                <View style={[
+                    styles.textContainer,
+                    isLandscape 
+                        ? { width: textWidth, height: artHeight }
+                        : { flex: 1, width: '100%' }
+                ]}>
+                    <ScrollView 
+                        style={{ flex: 1, width: '100%' }}
+                        contentContainerStyle={styles.textScroll}
+                        showsVerticalScrollIndicator={false}
+                    >
                         <Text style={styles.text}>{node.text}</Text>
 
                         {node.ending ? (
                             <View style={styles.endingBox}>
                                 <Text style={styles.endingTitle}>Концовка: {node.ending}</Text>
-
-                                <ChoiceButton
-                                    label="Вернуться в меню"
-                                    onPress={onExitGame}
-                                />
+                                <ChoiceButton label="Вернуться в меню" onPress={onExitGame} />
                             </View>
                         ) : (
                             <View style={styles.choicesContainer}>
@@ -123,11 +160,10 @@ export default function NovelScreen({ onExitGame }) {
                                 ))}
                             </View>
                         )}
-                    </View>
-
-                    <Text style={styles.version}>Контент: v{version}</Text>
+                    </ScrollView>
                 </View>
-            </ScrollView>
+
+            </View>
         </View>
     );
 }
@@ -143,30 +179,36 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 20,
     },
-    scrollContent: {
-        flexGrow: 1,
-        alignItems: 'center',
-    },
     gameContainer: {
+        flex: 1,
         width: '100%',
-        maxWidth: 900,
-        paddingHorizontal: 16,
-        paddingTop: 16,
-        paddingBottom: 40,
+        alignSelf: 'center',
+        padding: 16,
     },
-    art: {
-        width: '100%',
-        aspectRatio: 16 / 9,
+    gameContainerPortrait: {
+        flexDirection: 'column',
+        maxWidth: 800, 
+    },
+    gameContainerLandscape: {
+        flexDirection: 'row',
+        maxWidth: 1400, 
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    artWrapper: {
         borderRadius: 12,
         borderWidth: 2,
         borderColor: '#2a2a35',
-        marginBottom: 20,
         backgroundColor: '#111',
+        overflow: 'hidden', 
+    },
+    art: {
+        width: '100%',
+        height: '100%',
     },
     textContainer: {
         backgroundColor: 'rgba(20, 20, 25, 0.85)',
         borderRadius: 12,
-        padding: 20,
         borderWidth: 1,
         borderColor: '#333',
         shadowColor: '#000',
@@ -174,6 +216,12 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 5,
         elevation: 8,
+        overflow: 'hidden',
+    },
+    textScroll: {
+        padding: 20,
+        paddingBottom: 30,
+        flexGrow: 1, 
     },
     text: {
         color: '#e8e8e8',
@@ -206,12 +254,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontFamily: FONT_FAMILY,
         fontSize: 18,
-    },
-    version: {
-        color: '#555',
-        fontSize: 12,
-        textAlign: 'center',
-        marginTop: 30,
-        fontFamily: FONT_FAMILY,
     },
 });

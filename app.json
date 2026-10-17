@@ -1,19 +1,25 @@
 {
   "expo": {
-    "name": "Novella",
+    "name": "Witcher: With Flickering Heart",
     "slug": "vn-app",
-    "version": "1.0.0",
-    "orientation": "portrait",
+    "version": "2.0.0",
+    "orientation": "default",
     "userInterfaceStyle": "dark",
+    "icon": "./assets/icon.png",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.dimagdd.vnapp"
     },
     "android": {
-      "package": "com.dimagdd.vnapp"
+      "package": "com.dimagdd.vnapp",
+      "icon": "./assets/icon.png",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#09090b"
+      }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.png"
     },
     "experiments": {
       "baseUrl": "/vn-app"
