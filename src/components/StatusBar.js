@@ -1,12 +1,18 @@
-import { View, Text, StyleSheet, Platform } from 'react-native';
+import { View, Text, StyleSheet, Platform, Pressable } from 'react-native';
 
 const FONT_FAMILY = Platform.OS === 'ios' ? 'Georgia' : 'serif';
 
-export default function StatusBar({ state }) {
+export default function StatusBar({ state, onExit }) {
 
 
     return (
         <View style={styles.bar}>
+
+            {onExit && (
+                <Pressable onPress={onExit} style={({ pressed }) => [styles.backBtn, pressed && { opacity: 0.5 }]}>
+                    <Text style={styles.backIcon}>⏪</Text>
+                </Pressable>
+            )}
 
             <View style={styles.statBox}>
                 <Text style={styles.value}>❤️ {state.hp}</Text>
@@ -47,6 +53,14 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.8,
         shadowRadius: 3,
         elevation: 5,
+    },
+    backBtn: {
+        paddingRight: 15,
+        borderRightWidth: 1,
+        borderColor: '#333',
+    },
+    backIcon: {
+        fontSize: 18,
     },
     statBox: {
         alignItems: 'center',

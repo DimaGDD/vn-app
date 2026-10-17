@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, ActivityIndicator, Platform } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, ActivityIndicator, Platform, Alert } from 'react-native';
 import { loadStory } from '../api/storyLoader';
 import { initialState, applyEffects, checkCondition } from '../state/gameState';
 import ChoiceButton from '../components/ChoiceButton';
@@ -15,6 +15,10 @@ export default function NovelScreen({ onExitGame }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [version, setVersion] = useState(null);
+
+    const confirmExit = () => {
+        onExitGame();
+    }
 
     async function bootstrap(force = false) {
         setLoading(true);
@@ -84,7 +88,7 @@ export default function NovelScreen({ onExitGame }) {
 
     return (
         <View style={styles.root}>
-            <StatusBar state={state} />
+            <StatusBar state={state} onExit={confirmExit} />
 
             <ScrollView contentContainerStyle={styles.scrollContent}>
                 <View style={styles.gameContainer}>

@@ -6,7 +6,7 @@ export default function MainMenu({ onStart }) {
     
     const handleExit = () => {
         if (Platform.OS === 'android') {
-            BackHandler.exitApp(); // Закрывает приложение на Android
+            BackHandler.exitApp();
         }
     };
 
@@ -14,7 +14,7 @@ export default function MainMenu({ onStart }) {
         <View style={styles.container}>
             <View style={styles.content}>
                 <Text style={styles.title}>ВЕДЬМАК</Text>
-                <Text style={styles.subtitle}>С трепетом в сердце</Text>
+                <Text style={styles.subtitle}>С трепещущим сердцем</Text>
 
                 <View style={styles.buttonContainer}>
                     <Pressable 
@@ -24,7 +24,6 @@ export default function MainMenu({ onStart }) {
                         <Text style={styles.btnText}>Начать игру</Text>
                     </Pressable>
 
-                    {/* Показываем кнопку выхода только на Android */}
                     {Platform.OS === 'android' && (
                         <Pressable 
                             style={({ pressed }) => [styles.btn, pressed && styles.pressed]} 
@@ -53,7 +52,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     title: {
-        color: '#C5A059', // Золотой
+        color: '#C5A059',
         fontSize: 48,
         fontWeight: 'bold',
         fontFamily: FONT_FAMILY,
