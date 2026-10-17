@@ -4,8 +4,8 @@ import { loadStory } from '../api/storyLoader';
 import { initialState, applyEffects, checkCondition } from '../state/gameState';
 import ChoiceButton from '../components/ChoiceButton';
 import StatusBar from '../components/StatusBar';
+import { BASE } from '../api/config';
 
-const BASE = process.env.EXPO_PUBLIC_STORY_BASE || 'https://dimagdd.github.io/vn-app/story';
 
 export default function NovelScreen() {
     const [story, setStory] = useState(null);
