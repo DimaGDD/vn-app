@@ -236,8 +236,8 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#e8e8e8',
-        fontSize: 18,
-        lineHeight: 28,
+        fontSize: 20,
+        lineHeight: 32,
         marginBottom: 16,
         fontFamily: FONT_FAMILY,
     },

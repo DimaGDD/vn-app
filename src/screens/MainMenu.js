@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#C5A059',
-        fontSize: 48,
+        fontSize: 54,
         fontWeight: 'bold',
         fontFamily: FONT_FAMILY,
         letterSpacing: 4,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     },
     btnText: {
         color: '#e8e8e8',
-        fontSize: 18,
+        fontSize: 20,
         fontFamily: FONT_FAMILY,
         letterSpacing: 1,
     },
