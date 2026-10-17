@@ -1,13 +1,23 @@
+import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import NovelScreen from './src/screens/NovelScreen';
+import MainMenu from './src/screens/MainMenu';
 
 
 export default function App() {
+    const [isGameRunning, setIsGameRunning] = useState(false);
+
     return (
         <SafeAreaProvider>
             <SafeAreaView style={styles.safe}>
-                <NovelScreen />
+
+                {isGameRunning ? (
+                    <NovelScreen onExitGame={() => setIsGameRunning(false)} />
+                ) : (
+                    <MainMenu onStart={() => setIsGameRunning(true)} />
+                )}
+
             </SafeAreaView>
         </SafeAreaProvider>
     )
@@ -16,6 +26,6 @@ export default function App() {
 const styles = StyleSheet.create({
     safe: {
         flex: 1,
-        backgroundColor: '#0d0d16',
+        backgroundColor: '#09090b',
     },
 });

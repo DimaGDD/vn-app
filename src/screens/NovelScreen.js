@@ -8,7 +8,7 @@ import { BASE } from '../api/config';
 
 const FONT_FAMILY = Platform.OS === 'ios' ? 'Georgia' : 'serif';
 
-export default function NovelScreen() {
+export default function NovelScreen({ onExitGame }) {
     const [story, setStory] = useState(null);
     const [nodeId, setNodeId] = useState(null);
     const [state, setState] = useState(initialState);
@@ -104,11 +104,8 @@ export default function NovelScreen() {
                                 <Text style={styles.endingTitle}>Концовка: {node.ending}</Text>
 
                                 <ChoiceButton
-                                    label="Начать заново"
-                                    onPress={() => {
-                                        setState(initialState);
-                                        setNodeId(story.start);
-                                    }}
+                                    label="Вернуться в меню"
+                                    onPress={onExitGame}
                                 />
                             </View>
                         ) : (
