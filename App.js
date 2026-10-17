@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 import NovelScreen from './src/screens/NovelScreen';
 import MainMenu from './src/screens/MainMenu';
 
@@ -10,6 +11,8 @@ export default function App() {
 
     return (
         <SafeAreaProvider>
+            <StatusBar hidden={true} style="light" />
+            
             <SafeAreaView style={styles.safe}>
 
                 {isGameRunning ? (
