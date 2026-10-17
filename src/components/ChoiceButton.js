@@ -1,4 +1,6 @@
-import { Pressable, Text, StyleSheet } from 'react-native';
+import { Pressable, Text, StyleSheet, Platform } from 'react-native';
+
+const FONT_FAMILY = Platform.OS === 'ios' ? 'Georgia' : 'serif';
 
 export default function ChoiceButton({ label, onPress, disabled }) {
     return (
@@ -18,12 +20,27 @@ export default function ChoiceButton({ label, onPress, disabled }) {
 
 const styles = StyleSheet.create({
     btn: {
-        backgroundColor: '#2a2a3d',
-        padding: 14,
-        borderRadius: 10,
+        backgroundColor: '#1a1a24',
+        paddingVertical: 14,
+        paddingHorizontal: 20,
+        borderRadius: 8,
         marginVertical: 6,
+        borderWidth: 1,
+        borderColor: '#4a4a5a',
+        alignItems: 'center',
     },
-    pressed: { opacity: 0.7 },
-    disabled: { opacity: 0.3 },
-    text: { color: '#fff', fontSize: 16, textAlign: 'center' },
+    pressed: {
+        backgroundColor: '#2a2a3d',
+        borderColor: '#C5A059',
+    },
+    disabled: { 
+        opacity: 0.4
+    },
+    text: {
+        color: '#e8e8e8', 
+        fontSize: 17,
+        textAlign: 'center',
+        fontFamily: FONT_FAMILY,
+        letterSpacing: 0.5,
+    },
 });

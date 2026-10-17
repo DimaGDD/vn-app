@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, ActivityIndicator, Platform } from 'react-native';
 import { loadStory } from '../api/storyLoader';
 import { initialState, applyEffects, checkCondition } from '../state/gameState';
 import ChoiceButton from '../components/ChoiceButton';
 import StatusBar from '../components/StatusBar';
 import { BASE } from '../api/config';
 
+const FONT_FAMILY = Platform.OS === 'ios' ? 'Georgia' : 'serif';
 
 export default function NovelScreen() {
     const [story, setStory] = useState(null);
@@ -48,7 +49,7 @@ export default function NovelScreen() {
     if (loading) {
         return (
             <View style={styles.center}>
-                <ActivityIndicator />
+                <ActivityIndicator size="large" color="#C5A059" />
             </View>
         );
     }
@@ -66,7 +67,7 @@ export default function NovelScreen() {
     if (!node) {
         return (
             <View style={styles.center}>
-                <Text style={{ color: '#fff' }}>Сцена не найдена</Text>
+                <Text style={{ color: '#fff', fontFamily: FONT_FAMILY }}>Сцена не найдена</Text>
             </View>
         );
     }
@@ -84,76 +85,132 @@ export default function NovelScreen() {
     return (
         <View style={styles.root}>
             <StatusBar state={state} />
-            <ScrollView contentContainerStyle={styles.content}>
-                {node.art && (
-                    <Image
-                        source={{ uri: `${BASE}/${node.art}?v=${version}` }}
-                        style={styles.art}
-                        resizeMode='cover'
-                    />
-                )}
-                <Text style={styles.text}>{node.text}</Text>
 
-                {node.ending ? (
-                    <View>
-                        <Text style={styles.endingTitle}>Концовка: {node.ending}</Text>
-                        <ChoiceButton
-                            label="Начать заново"
-                            onPress={() => {
-                                setState(initialState);
-                                setNodeId(story.start);
-                            }}
+            <ScrollView contentContainerStyle={styles.scrollContent}>
+                <View style={styles.gameContainer}>
+                    {node.art && (
+                        <Image
+                            source={{ uri: `${BASE}/${node.art}?v=${version}` }}
+                            style={styles.art}
+                            resizeMode='cover'
                         />
+                    )}
+
+                    <View style={styles.textContainer}>
+                        <Text style={styles.text}>{node.text}</Text>
+
+                        {node.ending ? (
+                            <View style={styles.endingBox}>
+                                <Text style={styles.endingTitle}>Концовка: {node.ending}</Text>
+
+                                <ChoiceButton
+                                    label="Начать заново"
+                                    onPress={() => {
+                                        setState(initialState);
+                                        setNodeId(story.start);
+                                    }}
+                                />
+                            </View>
+                        ) : (
+                            <View style={styles.choicesContainer}>
+                                {choices.map((c, i) => (
+                                    <ChoiceButton 
+                                        key={i}
+                                        label={c.text}
+                                        onPress={() => go(c.next, c.effects)}
+                                    />
+                                ))}
+                            </View>
+                        )}
                     </View>
-                ) : (
-                    choices.map((c, i) => (
-                        <ChoiceButton 
-                            key={i}
-                            label={c.text}
-                            onPress={() => go(c.next, c.effects)}
-                        />
-                    ))
-                )}
 
-                <Text style={styles.version}>Контент: v{version}</Text>
+                    <Text style={styles.version}>Контент: v{version}</Text>
+                </View>
             </ScrollView>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    root: { flex: 1, backgroundColor: '#0d0d16' },
+    root: { 
+        flex: 1, 
+        backgroundColor: '#09090b' 
+    },
     center: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
     },
-    content: { padding: 16 },
+    scrollContent: {
+        flexGrow: 1,
+        alignItems: 'center',
+    },
+    gameContainer: {
+        width: '100%',
+        maxWidth: 900,
+        paddingHorizontal: 16,
+        paddingTop: 16,
+        paddingBottom: 40,
+    },
     art: {
         width: '100%',
-        height: 220,
+        aspectRatio: 16 / 9,
         borderRadius: 12,
-        marginBottom: 14,
-        backgroundColor: '#222',
+        borderWidth: 2,
+        borderColor: '#2a2a35',
+        marginBottom: 20,
+        backgroundColor: '#111',
+    },
+    textContainer: {
+        backgroundColor: 'rgba(20, 20, 25, 0.85)',
+        borderRadius: 12,
+        padding: 20,
+        borderWidth: 1,
+        borderColor: '#333',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
+        elevation: 8,
     },
     text: {
-        color: '#f2f2f2',
-        fontSize: 17,
-        lineHeight: 24,
+        color: '#e8e8e8',
+        fontSize: 18,
+        lineHeight: 28,
         marginBottom: 16,
+        fontFamily: FONT_FAMILY,
+    },
+    choicesContainer: {
+        marginTop: 10,
+        borderTopWidth: 1,
+        borderColor: '#333',
+        paddingTop: 16,
+    },
+    endingBox: {
+        marginTop: 20,
+        alignItems: 'center',
     },
     endingTitle: {
-        color: '#ffd166',
-        fontSize: 18,
-        marginBottom: 10,
+        color: '#C5A059',
+        fontSize: 22,
+        fontWeight: 'bold',
+        marginBottom: 20,
         textAlign: 'center',
+        fontFamily: FONT_FAMILY,
     },
-    err: {color: '#ff5b5b', marginBottom: 12, textAlign: 'center'},
+    err: {
+        color: '#ff5b5b', 
+        marginBottom: 12, 
+        textAlign: 'center',
+        fontFamily: FONT_FAMILY,
+        fontSize: 18,
+    },
     version: {
-        color: '#666',
+        color: '#555',
         fontSize: 12,
         textAlign: 'center',
-        marginTop: 20,
+        marginTop: 30,
+        fontFamily: FONT_FAMILY,
     },
 });
