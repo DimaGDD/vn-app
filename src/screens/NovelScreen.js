@@ -66,7 +66,7 @@ export default function NovelScreen({ onExitGame }) {
     }
 
     useEffect(() => {
-        bootstrap();
+        bootstrap(true);
     }, []);
 
     useEffect(() => {

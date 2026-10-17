@@ -3,16 +3,17 @@ import { BASE } from './config';
 
 
 const MANIFEST_URL = `${BASE}/manifest.json`;
-const CACHE_KEY = 'vn_story_cache_v1';
+const CACHE_KEY = 'vn_story_cache_v2';
 
 
 export async function loadStory({ forceRefresh = false } = {}) {
     const cached = await readCache();
 
     try {
-        const manifestRes = await fetch(MANIFEST_URL, {
+        const timestamp = new Date().getTime();
+        const manifestRes = await fetch(`${MANIFEST_URL}?t=${timestamp}`, {
             cache: 'no-store',
-            headers: { 'Cache-Control': 'no-cache' },
+            headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' },
         });
 
         if (!manifestRes.ok) throw new Error('manifest fetch failed');
@@ -22,7 +23,7 @@ export async function loadStory({ forceRefresh = false } = {}) {
             return { story: cached.story, version: manifest.version, fromCache: true };
         }
 
-        const storyRes = await fetch(`${BASE}/story.json?v=${manifest.version}`, {
+        const storyRes = await fetch(`${BASE}/story.json?v=${manifest.version}&t=${timestamp}`, {
             cache: 'no-store',
         });
 
