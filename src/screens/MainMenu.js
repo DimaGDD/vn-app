@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Pressable, Platform, BackHandler } from 'react-native';
+import { FONT_FAMILY } from '../api/config';
 
-const FONT_FAMILY = Platform.OS === 'ios' ? 'Georgia' : 'serif';
 
 export default function MainMenu({ onStart }) {
     

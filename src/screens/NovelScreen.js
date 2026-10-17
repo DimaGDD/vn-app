@@ -5,9 +5,8 @@ import { initialState, applyEffects, checkCondition } from '../state/gameState';
 import ChoiceButton from '../components/ChoiceButton';
 import StatusBar from '../components/StatusBar';
 import CombatScreen from '../components/CombatScreen';
-import { BASE } from '../api/config';
+import { BASE, FONT_FAMILY } from '../api/config';
 
-const FONT_FAMILY = Platform.OS === 'ios' ? 'Georgia' : 'serif';
 
 export default function NovelScreen({ onExitGame }) {
     const [story, setStory] = useState(null);

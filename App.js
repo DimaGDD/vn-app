@@ -9,10 +9,19 @@ import MainMenu from './src/screens/MainMenu';
 export default function App() {
     const [isGameRunning, setIsGameRunning] = useState(false);
 
+    const [fontsLoaded] = useFonts({
+        Montserrat_400Regular,
+        Montserrat_600SemiBold,
+    });
+
+    if (!fontsLoaded) {
+        return <View style={styles.safe} />;
+    }
+
     return (
         <SafeAreaProvider>
             <StatusBar hidden={true} style="light" />
-            
+
             <SafeAreaView style={styles.safe}>
 
                 {isGameRunning ? (

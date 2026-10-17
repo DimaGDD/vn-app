@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Platform, Pressable } from 'react-native';
+import { FONT_FAMILY } from '../api/config';
 
-const FONT_FAMILY = Platform.OS === 'ios' ? 'Georgia' : 'serif';
 
 export default function StatusBar({ state, onExit }) {
 
