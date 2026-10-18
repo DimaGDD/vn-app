@@ -1,12 +1,20 @@
 import { View, Text, StyleSheet, Platform, Pressable } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { FONT_FAMILY } from '../api/config';
 
 
 export default function StatusBar({ state, onExit }) {
-
+    const insets = useSafeAreaInsets();
 
     return (
-        <View style={styles.bar}>
+        <View style={[
+            styles.bar, 
+            { 
+                paddingTop: insets.top + 12,
+                paddingLeft: Math.max(10, insets.left + 10),
+                paddingRight: Math.max(10, insets.right + 10)
+            }]}>
 
             {onExit && (
                 <Pressable onPress={onExit} style={({ pressed }) => [styles.backBtn, pressed && { opacity: 0.5 }]}>
@@ -44,8 +52,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor: '#0d0d12',
-        paddingVertical: 12,
-        paddingHorizontal: 10,
+        paddingBottom: 12,
         borderBottomWidth: 2,
         borderBottomColor: '#C5A059',
         shadowColor: '#000',
