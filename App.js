@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 
 import { useFonts, Montserrat_400Regular, Montserrat_600SemiBold } from '@expo-google-fonts/montserrat';
 import { Cinzel_700Bold } from '@expo-google-fonts/cinzel';
+import { MedievalSharp_400Regular } from '@expo-google-fonts/medievalsharp';
 
 import NovelScreen from './src/screens/NovelScreen';
 import MainMenu from './src/screens/MainMenu';
@@ -18,6 +19,7 @@ export default function App() {
         Montserrat_400Regular,
         Montserrat_600SemiBold,
         Cinzel_700Bold,
+        MedievalSharp_400Regular,
     });
 
     if (!fontsLoaded) {

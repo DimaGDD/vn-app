@@ -30,9 +30,16 @@
       }
     },
     "plugins": [
-      "expo-font",
-      "expo-audio",
-      "expo-asset"
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./node_modules/@expo-google-fonts/cinzel/Cinzel_700Bold.ttf",
+            "./node_modules/@expo-google-fonts/montserrat/Montserrat_400Regular.ttf",
+            "./node_modules/@expo-google-fonts/montserrat/Montserrat_600SemiBold.ttf"
+          ]
+        }
+      ]
     ]
   }
 }

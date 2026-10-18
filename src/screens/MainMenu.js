@@ -123,7 +123,6 @@ const styles = StyleSheet.create({
     title: {
         color: '#C5A059',
         fontSize: 56,
-        // fontWeight: 'bold',
         fontFamily: "Cinzel_700Bold",
         letterSpacing: 6,
         marginBottom: 5,
@@ -141,7 +140,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontFamily: "Cinzel_700Bold",
         marginBottom: 60,
-        fontStyle: 'italic',
     },
     subtitleLandscape: {
         fontSize: 14,
