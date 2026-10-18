@@ -32,7 +32,7 @@ export default function NovelScreen({ onExitGame, volume }) {
     let artWidth, artHeight, textWidth;
 
     if (isLandscape) {
-        let idealArtWidth = containerWidth * 0.66;
+        let idealArtWidth = containerWidth * 0.6;
         let idealArtHeight = idealArtWidth * (9 / 16);
 
         if (idealArtHeight > containerHeight) {

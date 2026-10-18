@@ -28,18 +28,6 @@
       "eas": {
         "projectId": "679cb1cb-4ade-4ad7-bc60-60c43e115293"
       }
-    },
-    "plugins": [
-      [
-        "expo-font",
-        {
-          "fonts": [
-            "./node_modules/@expo-google-fonts/cinzel/Cinzel_700Bold.ttf",
-            "./node_modules/@expo-google-fonts/montserrat/Montserrat_400Regular.ttf",
-            "./node_modules/@expo-google-fonts/montserrat/Montserrat_600SemiBold.ttf"
-          ]
-        }
-      ]
-    ]
+    }
   }
 }
