@@ -1,8 +1,48 @@
+import { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Pressable, Platform, BackHandler } from 'react-native';
-import { FONT_FAMILY } from '../api/config';
+import Slider from '@react-native-community/slider';
+import { createAudioPlayer } from 'expo-audio';
+
+import { FONT_FAMILY, BASE } from '../api/config';
 
 
-export default function MainMenu({ onStart }) {
+export default function MainMenu({ onStart, volume, setVolume }) {
+    const playerRef = useRef(null);
+
+    useEffect(() => {
+        const player = createAudioPlayer({ uri: `${BASE}/audio/main_menu.mp3` });
+        player.loop = true;
+        player.volume = volume;
+
+        player.play();
+        playerRef.current = player;
+
+        return () => {
+            if (playerRef.current) {
+                playerRef.current.remove();
+                playerRef.current = null;
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        if (playerRef.current) {
+            playerRef.current.volume = volume;
+        }
+    }, [volume]);
+
+    const handleVolumeChange = (val) => {
+        setVolume(parseFloat(val));
+    };
+
+    const handleStartGame = () => {
+        if (playerRef.current) {
+            playerRef.current.remove();
+            playerRef.current = null;
+        }
+
+        onStart();
+    }
     
     const handleExit = () => {
         if (Platform.OS === 'android') {
@@ -19,7 +59,7 @@ export default function MainMenu({ onStart }) {
                 <View style={styles.buttonContainer}>
                     <Pressable 
                         style={({ pressed }) => [styles.btn, pressed && styles.pressed]} 
-                        onPress={onStart}
+                        onPress={handleStartGame}
                     >
                         <Text style={styles.btnText}>Начать игру</Text>
                     </Pressable>
@@ -32,6 +72,21 @@ export default function MainMenu({ onStart }) {
                             <Text style={styles.btnText}>Выйти</Text>
                         </Pressable>
                     )}
+                </View>
+
+                <View style={styles.volumeContainer}>
+                    <Text style={styles.volumeIcon}>{volume === 0 ? '🔇' : volume < 0.5 ? '🔉' : '🔊'}</Text>
+
+                    <Slider 
+                        style={styles.slider}
+                        minimumValue={0}
+                        maximumValue={1}
+                        value={volume}
+                        onValueChange={handleVolumeChange}
+                        minimumTrackTintColor='#C5A059'
+                        maximumTrackTintColor='#4a4a5a'
+                        thumbTintColor='#C5A059'
+                    />
                 </View>
             </View>
         </View>
@@ -90,5 +145,20 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontFamily: FONT_FAMILY,
         letterSpacing: 1,
+    },
+    volumeContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 30,
+        width: '100%',
+        paddingHorizontal: 20
+    },
+    volumeIcon: {
+        fontSize: 24,
+        marginRight: 10
+    },
+    slider: {
+        flex: 1,
+        height: 40
     },
 });

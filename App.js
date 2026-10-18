@@ -12,6 +12,7 @@ import MainMenu from './src/screens/MainMenu';
 
 export default function App() {
     const [isGameRunning, setIsGameRunning] = useState(false);
+    const [volume, setVolume] = useState(0.01);
 
     const [fontsLoaded] = useFonts({
         Montserrat_400Regular,
@@ -29,9 +30,16 @@ export default function App() {
 
             <View style={styles.safe}>
                 {isGameRunning ? (
-                    <NovelScreen onExitGame={() => setIsGameRunning(false)} />
+                    <NovelScreen 
+                        onExitGame={() => setIsGameRunning(false)} 
+                        volume={volume}    
+                    />
                 ) : (
-                    <MainMenu onStart={() => setIsGameRunning(true)} />
+                    <MainMenu 
+                        onStart={() => setIsGameRunning(true)} 
+                        volume={volume}
+                        setVolume={setVolume}    
+                    />
                 )}
             </View>
         </SafeAreaProvider>

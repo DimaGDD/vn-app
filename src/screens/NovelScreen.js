@@ -1,14 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { View, Text, Image, ScrollView, StyleSheet, ActivityIndicator, Platform, useWindowDimensions } from 'react-native';
 import { loadStory } from '../api/storyLoader';
 import { initialState, applyEffects, checkCondition } from '../state/gameState';
+import { createAudioPlayer } from 'expo-audio';
+
 import ChoiceButton from '../components/ChoiceButton';
 import StatusBar from '../components/StatusBar';
 import CombatScreen from '../components/CombatScreen';
+
 import { BASE, FONT_FAMILY } from '../api/config';
 
 
-export default function NovelScreen({ onExitGame }) {
+export default function NovelScreen({ onExitGame, volume }) {
     const [story, setStory] = useState(null);
     const [nodeId, setNodeId] = useState(null);
     const [state, setState] = useState(initialState);
@@ -22,6 +25,9 @@ export default function NovelScreen({ onExitGame }) {
     const MAX_WIDTH = 1400;
     const containerWidth = Math.min(width, MAX_WIDTH) - 32;
     const containerHeight = height - 80;
+
+    const playerRef = useRef(null);
+    const [currentTrack, setCurrentTrack] = useState(null);
 
     let artWidth, artHeight, textWidth;
 
@@ -63,6 +69,58 @@ export default function NovelScreen({ onExitGame }) {
             setLoading(false);
         }
     }
+
+    const handleExit = () => {
+        if (playerRef.current) {
+            playerRef.current.remove();
+            playerRef.current = null;
+        }
+
+        onExitGame();
+    };
+
+    useEffect(() => {
+        const node = story?.nodes[nodeId];
+
+        if (!node || !node.music) return;
+        if (currentTrack === node.music) return;
+
+        if (playerRef.current) {
+            playerRef.current.remove();
+            playerRef.current = null;
+        }
+
+        try {
+            const player = createAudioPlayer({ uri: `${BASE}/${node.music}?v=${version}` });
+            player.loop = true;
+            player.volume = volume;
+
+            if (node.musicStart !== undefined && node.musicStart > 0) {
+                player.seekTo(node.musicStart).catch(e => console.log("Ошибка перемотки:", e));
+            }
+            
+            player.play();
+
+            playerRef.current = player;
+            setCurrentTrack(node.music);
+        } catch (e) {
+            console.log("Ошибка загрузки музыки:", e);
+        }
+    }, [nodeId, story, currentTrack, version]);
+
+    useEffect(() => {
+        if (playerRef.current) {
+            playerRef.current.volume = volume;
+        }
+    }, [volume]);
+
+    useEffect(() => {
+        return () => {
+            if (playerRef.current) {
+                playerRef.current.remove();
+            }
+        };
+    }, []);
 
     useEffect(() => {
         bootstrap(true);
@@ -116,7 +174,7 @@ export default function NovelScreen({ onExitGame }) {
 
     return (
         <View style={styles.root}>
-            <StatusBar state={state} onExit={confirmExit} />
+            <StatusBar state={state} onExit={handleExit} />
 
             <View style={[styles.gameContainer, isLandscape ? styles.gameContainerLandscape : styles.gameContainerPortrait]}>
                 
@@ -151,7 +209,7 @@ export default function NovelScreen({ onExitGame }) {
                         {node.ending ? (
                             <View style={styles.endingBox}>
                                 <Text style={styles.endingTitle}>Концовка: {node.ending}</Text>
-                                <ChoiceButton label="Вернуться в меню" onPress={onExitGame} />
+                                <ChoiceButton label="Вернуться в меню" onPress={handleExit} />
                             </View>
                         ) : node.type === 'combat' ? (
                             <CombatScreen 
