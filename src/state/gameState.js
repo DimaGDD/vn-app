@@ -7,6 +7,7 @@ export const initialState = {
     checkedBack: false,
     hasSplinter: false,
     hasBook: false,
+    failedPoem: false,
 };
 
 export function applyEffects(state, effects = {}) {

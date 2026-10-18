@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
+
 import { useFonts, Montserrat_400Regular, Montserrat_600SemiBold } from '@expo-google-fonts/montserrat';
+import { Cinzel_700Bold } from '@expo-google-fonts/cinzel';
+
 import NovelScreen from './src/screens/NovelScreen';
 import MainMenu from './src/screens/MainMenu';
 
@@ -13,6 +16,7 @@ export default function App() {
     const [fontsLoaded] = useFonts({
         Montserrat_400Regular,
         Montserrat_600SemiBold,
+        Cinzel_700Bold,
     });
 
     if (!fontsLoaded) {
