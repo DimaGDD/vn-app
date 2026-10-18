@@ -2,8 +2,8 @@
     "start": "intro",
     "nodes": {
         "intro": {
-            "art": "art/vergen.png",
-            "music": "audio/vergen.mp3",
+            "art": "art/vergen.webp",
+            "music": "audio/vergen.m4a",
             "text": "Дневной Верген встретил Геральта запахом сырости и дешевого эля. Ведьмак направлялся к таверне, предвкушая долгожданную кружку пива после утомительного утра.",
             "choices": [
                 { "text": "Войти в таверну", "next": "callboard" }
@@ -11,8 +11,8 @@
         },
 
         "callboard": {
-            "art": "art/callboard.png",
-            "music": "audio/vergen.mp3",
+            "art": "art/callboard.webp",
+            "music": "audio/vergen.m4a",
             "text": "У самого входа его внимание привлекла доска объявлений. Среди скучных предложений о пропаже скота выделялся свежий приказ. Пропадают люди. Награда обещана солидная. Геральт поправил меч на спине и направился к заказчику.",
             "choices": [
                 { "text": "Найти заказчика", "next": "talk_eleas" }
@@ -20,8 +20,8 @@
         },
 
         "talk_eleas": {
-            "art": "art/talk_eleas.png",
-            "music": "audio/vergen.mp3",
+            "art": "art/talk_eleas.webp",
+            "music": "audio/vergen.m4a",
             "text": "Заказчиком оказался эльф. Его глаза горели мрачной решимостью.\n\n— Я Элеас, из отряда Иорвета. У меня к тебе важное дело, ведьмак.\n— Слушаю.\n— В окрестностях Вергена начали бесследно исчезать мужчины. А недавно мы стали находить их тела. Изуродованные. Ни человек, ни зверь не могли сотворить такого. Прошу, разберись.\n— Где именно находили тела? И где сейчас лежат останки?\n— Больше всего тел возле сожжённой деревни. А то, что осталось, схоронили в склепе за городом, в лесу.",
             "choices": [
                 { "text": "Взяться за дело", "next": "agree" },
@@ -30,15 +30,15 @@
         },
 
         "refuse": {
-            "art": "art/refuse.png",
-            "music": "audio/tavern.mp3",
+            "art": "art/refuse.webp",
+            "music": "audio/tavern.m4a",
             "text": "— Не мои проблемы, — буркнул Геральт.\nОн развернулся и толкнул дверь таверны. Пусть с этим разбираются городские стражники. А его ждет пиво, и сегодня он не намерен отвлекаться на эльфийские страдания.",
             "ending": "Пьяный вечер"
         },
 
         "agree": {
-            "art": "art/walk_to_crime.png",
-            "music": "audio/vergen.mp3",
+            "art": "art/walk_to_crime.webp",
+            "music": "audio/vergen.m4a",
             "text": "— Хорошо. Я посмотрю, что там происходит, — кивнул ведьмак.\nОн развернулся и направился к окраинам, туда, где чернели обгоревшие руины.",
             "choices": [
                 { "text": "Пойти к сожжённой деревне", "next": "crime_scene" }
@@ -46,8 +46,8 @@
         },
 
         "crime_scene": {
-            "art": "art/crime_scene.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/crime_scene.webp",
+            "music": "audio/mystical.m4a",
             "text": "Пепелище встретило Геральта тишиной. В воздухе висел едкий запах гари. Осмотрев кусты у дороги, ведьмак заметил темные пятна крови. Принюхавшись, он уловил отчетливый запах серы. Слишком знакомый запах. Слишком странный для обычных разбойников.\n\nПора было наведаться в склеп.",
             "choices": [
                 { "text": "Идти в склеп", "next": "crypt" }
@@ -55,8 +55,8 @@
         },
 
         "crypt": {
-            "art": "art/crypt.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/crypt.webp",
+            "music": "audio/mystical.m4a",
             "text": "Склеп был сырым и холодным. На каменном выступе лежало тело мужчины. Судя по разложению, его принесли сюда совсем недавно. Геральт присел на корточки и приготовился к осмотру.",
             "choices": [
                 { "text": "Осмотреть одежду", "next": "check_clothes", "condition": { "checkedClothes": false } },
@@ -67,39 +67,39 @@
         },
 
         "check_clothes": {
-            "art": "art/clothes.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/clothes.webp",
+            "music": "audio/mystical.m4a",
             "text": "Одежда превратилась в лохмотья. Осторожно отодвинув ткань, Геральт заметил на ней характерные желтоватые пятна. Сера. Значит, здесь точно замешана магия или потусторонние твари.",
             "effects": { "checkedClothes": true, "reputation": 1 },
             "choices": [ { "text": "Продолжить осмотр", "next": "crypt" } ]
         },
 
         "check_hands": {
-            "art": "art/hands.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/hands.webp",
+            "music": "audio/mystical.m4a",
             "text": "Руки мертвеца покрывали глубокие порезы — он отчаянно закрывался от чего-то очень острого. Ковыряясь в ране, Геральт нащупал твердый предмет. Это оказался металлический осколок. Также в закоченевших пальцах мужчина сжимал клок длинных темных волос.",
             "effects": { "checkedHands": true, "hasSplinter": true, "reputation": 1 },
             "choices": [ { "text": "Продолжить осмотр", "next": "crypt" } ]
         },
 
         "check_back": {
-            "art": "art/back.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/back.webp",
+            "music": "audio/mystical.m4a",
             "text": "Спина была исполосована следами ногтей. Судя по характеру ран, бедняга перед смертью явно провел незабываемую ночь. В кармане его куртки нашлась книга. Почерк на форзаце был до боли знакомым. Поэмы. И это точно перо маэстро Лютика.",
             "effects": { "checkedBack": true, "hasBook": true, "reputation": 1 },
             "choices": [ { "text": "Продолжить осмотр", "next": "crypt" } ]
         },
 
         "result": {
-            "art": "art/crypt.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/crypt.webp",
+            "music": "audio/mystical.m4a",
             "text": "Следы ногтей, сера, волосы... И главное — книга стихов. Геральт сложил пазл воедино. Здесь не обошлось без суккуба. У ведьмака созрел план, как выманить тварь, но для этого ему нужен был тот, кто умеет красиво говорить. Лютик.",
             "choices": [ { "text": "Найти Лютика", "next": "meet_dandelion" } ]
         },
 
         "meet_dandelion": {
-            "art": "art/dandelion.png",
-            "music": "audio/tavern.mp3",
+            "art": "art/dandelion.webp",
+            "music": "audio/tavern.m4a",
             "text": "— Геральт! Друг мой! — Лютик расплылся в улыбке, но увидев книгу в руках ведьмака, тут же побледнел. — О боги, ты нашел её! Без этой книги я чувствовал себя как кастрат в борделе — вроде и место есть, а толку ноль.\n\nГеральт вкратце обрисовал ситуацию и попросил помощи. Лютик, обожавший внимание публики (даже если эта публика — суккуб), согласился не раздумывая. Встреча была назначена на полночь.",
             "choices": [
                 { "text": "Идти к логову", "next": "ambush" }
@@ -107,15 +107,15 @@
         },
 
         "ambush": {
-            "art": "art/ambush.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/ambush.webp",
+            "music": "audio/mystical.m4a",
             "text": "Полночь. Светит луна, где-то воет волк. План был прост: Лютик наяривает на лютне и поет самые соблазнительные поэмы, а как только суккуб теряет бдительность — Геральт делает свое дело.",
             "choices": [ { "text": "Начать представление", "next": "lure_start" } ]
         },
 
         "lure_start": {
-            "art": "art/lure_start.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/lure_start.webp",
+            "music": "audio/mystical.m4a",
             "text": "Лютик прокашлялся, ударил по струнам и затянул первую строчку.",
             "choices": [
                 { "text": "«Если бы желала дева лечь со мною…»", "next": "poem_fail_1" },
@@ -125,8 +125,8 @@
         },
 
         "poem_step_2": {
-            "art": "art/lure_start.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/lure_start.webp",
+            "music": "audio/mystical.m4a",
             "text": "«...Если бы тела смогли сложиться в песню…»\n\nМелодия полилась над поляной. Из-под земли послышался тихий шорох. Невидимая слушательница явно заинтересовалась. Нужно продолжать.",
             "choices": [
                 { "text": "«Я б любил сначала, а потом спросил бы…»", "next": "poem_fail_2" },
@@ -135,8 +135,8 @@
         },
 
         "poem_step_3": {
-            "art": "art/lure_start.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/lure_start.webp",
+            "music": "audio/mystical.m4a",
             "text": "«...То спросило б сердце белые ладони…»\n\nИз-под земли раздался томный, обволакивающий женский голос: «Продолжай...»",
             "choices": [
                 { "text": "«Захотят владеть им, коль мне грудь откроешь…»", "next": "poem_success" },
@@ -145,32 +145,32 @@
         },
 
         "poem_fail_1": {
-            "art": "art/lure_fail.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/lure_fail.webp",
+            "music": "audio/mystical.m4a",
             "text": "— Фу, как банально! — фыркнул голос из-под земли. — Ты поэт или пьяный матрос в портовом борделе? Уходи, пока я не рассердилась!\n\nЛютик стушевался. Сколько он ни пытался выдавить из себя еще хоть слово, суккуб молчала. Пришлось возвращаться к Геральту несолоно хлебавши.",
             "effects": { "failedPoem": true },
             "choices": [ { "text": "Попробовать снова", "next": "lure_start" } ]
         },
 
         "poem_fail_2": {
-            "art": "art/lure_fail.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/lure_fail.webp",
+            "music": "audio/mystical.m4a",
             "text": "— Ты сбился с ритма, рифмоплёт! — рассмеялась невидимая слушательница. — Уши вянут от твоих виршей.\n\nСуккуб потеряла интерес. Лютик опустил лютню и виновато посмотрел на кусты, где прятался ведьмак.",
             "effects": { "failedPoem": true },
             "choices": [ { "text": "Попробовать снова", "next": "lure_start" } ]
         },
 
         "poem_fail_3": {
-            "art": "art/lure_fail.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/lure_fail.webp",
+            "music": "audio/mystical.m4a",
             "text": "— Я предпочитаю мужчин погорячее, а не твой сухой паёк! — съязвила суккуб. — Иди поешь сам, стихоплёт!\n\nЛютик обиженно надул губы. Выманить монстра не удалось, пришлось возвращаться к Геральту.",
             "effects": { "failedPoem": true },
             "choices": [ { "text": "Попробовать снова", "next": "lure_start" } ]
         },
 
         "poem_success": {
-            "art": "art/poem_success.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/poem_success.webp",
+            "music": "audio/mystical.m4a",
             "text": "Земля дрогнула, и в траве открылся потайной люк. Из темноты пахнуло сладкими духами и чем-то греховным.\n\n— Твои стихи прекрасны, поэт, — промурлыкал голос. — Спускайся, я хочу наградить тебя...\n\nЛютик замер. С одной стороны — Геральт и долг. С другой — суккуб, с которой он еще никогда не... В общем, поэт задумался.",
             "choices": [
                 { "text": "Проявить благоразумие (Пойти за Геральтом)", "next": "lutik_goes_to_geralt" },
@@ -179,8 +179,8 @@
         },
 
         "lutik_goes_to_geralt": {
-            "art": "art/lutik_goes_to_geralt.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/lutik_goes_to_geralt.webp",
+            "music": "audio/mystical.m4a",
             "text": "— План удался! — прошептал Лютик, подбегая к ведьмаку и потирая руки. — Она пригласила меня вниз. Пойдем, только давай без резни, может, договоримся?",
             "choices": [
                 { "text": "Спуститься в логово", "next": "succubus_lair" }
@@ -188,8 +188,8 @@
         },
 
         "lutik_goes_to_succubus": {
-            "art": "art/lutik_goes_to_succubus.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/lutik_goes_to_succubus.webp",
+            "music": "audio/mystical.m4a",
             "text": "Долг — это хорошо, но Лютик решил, что жизнь слишком коротка, чтобы отказываться от таких приключений. Он смело шагнул в люк, даже не оглянувшись на Геральта.",
             "choices": [
                 { "text": "Спасать дурака", "next": "geralt_look_at_dandelion" }
@@ -197,15 +197,15 @@
         },
 
         "geralt_look_at_dandelion": {
-            "art": "art/geralt_look_at_dandelion.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/geralt_look_at_dandelion.webp",
+            "music": "audio/mystical.m4a",
             "text": "Геральт тихо выругался, сплюнул на землю и полез следом. Оставлять поэта наедине с демонессой было смертельно опасно (в первую очередь для самого поэта).",
             "choices": [ { "text": "Спуститься за Лютиком", "next": "succubus_lair_dandelion" } ]
         },
 
         "lure_failed": {
-            "art": "art/lutik_fail_goes_to_geralt.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/lutik_fail_goes_to_geralt.webp",
+            "music": "audio/mystical.m4a",
             "text": "— Эта суккуб разбирается в искусстве примерно так же, как тролль в столовом этикете! — оправдывался Лютик.\n\nВыманить монстра не удалось. Геральту ничего не оставалось, кроме как идти к Элеасу и признавать провал.",
             "choices": [
                 { "text": "Пойти к Элеасу", "next": "eleas_fail" }
@@ -213,15 +213,15 @@
         },
 
         "succubus_lair": {
-            "art": "art/succubus_lair.png",
-            "music": "audio/succubus.mp3",
+            "art": "art/succubus_lair.webp",
+            "music": "audio/succubus.m4a",
             "text": "Логово утопало в мягком свете свечей и тяжелых шелках. Суккуб, возлежащая на кровати, удивленно изогнула бровь, увидев вместо барда ведьмака с мечом. Но нападать не спешила. Геральт тоже не стал обнажать сталь. Иногда слова острее клинка.",
             "choices": [ { "text": "Начать разговор", "next": "succubus_talk" } ]
         },
 
         "succubus_talk": {
-            "art": "art/succubus_talk.png",
-            "music": "audio/succubus.mp3",
+            "art": "art/succubus_talk.webp",
+            "music": "audio/succubus.m4a",
             "text": "— Зачем мне убивать? — усмехнулась она. — Я питаюсь эмоциями, страстью. Беру лишь крохи жизненной энергии, которые потом восполняются. Это безобидно.\n\nОна грациозно потянулась и добавила уже серьезнее:\n\n— Но есть один эльф. Элеас. Он влюблен в меня до безумия. Он убивает всех, кто подходит к моему логову, из ревности. Если я не буду с ним, он убьет и меня.",
             "choices": [
                 { "text": "Поверить ей", "next": "believe_succubus" },
@@ -230,22 +230,22 @@
         },
 
         "succubus_lair_dandelion": {
-            "art": "art/succubus_lair_dandelion.png",
-            "music": "audio/succubus.mp3",
+            "art": "art/succubus_lair_dandelion.webp",
+            "music": "audio/succubus.m4a",
             "text": "Геральт спрыгнул в логово и застал идиллическую картину: Лютик сидел на кровати, завороженно глядя на суккуба, а та нежно перебирала его волосы. Увидев ведьмака, она не стала нападать, а лишь улыбнулась.",
             "choices": [ { "text": "Выяснить, что происходит", "next": "succubus_talk" } ]
         },
 
         "believe_succubus": {
-            "art": "art/eleas_liar.png",
-            "music": "audio/eleas.mp3",
+            "art": "art/eleas_liar.webp",
+            "music": "audio/eleas.m4a",
             "text": "— Придержи свой меч, — сказал Геральт. — Кажется, у нас появился общий враг.\n\nОн вернулся к Элеасу и прямо заявил, что тот лжец, и что Иорвет должен узнать правду о своем подчиненном.",
             "choices": [ { "text": "Пойти к Иорвету", "next": "iorweth_talk" } ]
         },
 
         "iorweth_talk": {
-            "art": "art/iorweth_talk.png",
-            "music": "audio/eleas.mp3",
+            "art": "art/iorweth_talk.webp",
+            "music": "audio/eleas.m4a",
             "text": "Эльф-командир выслушал Геральта, хмурясь всё сильнее. Обвинение в убийстве своих же собратьев — дело серьезное.\n\n— Элеас — мой воин, — сказал Иорвет. — Я не могу казнить его без веских доказательств. Чем ты можешь подтвердить свои слова, ведьмак?",
             "choices": [
                 { "text": "Отдать осколок металла на проверку", "next": "show_splinter", "condition": { "hasSplinter": true } },
@@ -254,30 +254,30 @@
         },
 
         "show_splinter": {
-            "art": "art/iorweth_talk.png",
-            "music": "audio/eleas.mp3",
+            "art": "art/iorweth_talk.webp",
+            "music": "audio/eleas.m4a",
             "text": "Геральт протянул Иорвету металлический осколок. Эльф долго вертел его в руках, изучая клеймо, а затем мрачно кивнул. Это была сталь из их собственных кузниц. Такая есть у каждого воина отряда.\n\nОднако когда они отправились к Элеасу, чтобы предъявить обвинение, его нигде не было — он просто ушел. Иорвет скрипнул зубами, но сдержал слово — он щедро расплатился с ведьмаком за раскрытие правды.",
             "effects": { "gold": 150, "reputation": 2 },
             "ending": "Правда восторжествовала"
         },
 
         "no_evidence": {
-            "art": "art/no_evidence.png",
-            "music": "audio/eleas.mp3",
+            "art": "art/no_evidence.webp",
+            "music": "audio/eleas.m4a",
             "text": "— Пустые слова, ведьмак, — холодно произнес Иорвет. — Убирайся, пока я не решил, что ты покрываешь настоящего убийцу.\n\nГеральт остался ни с чем. Доказательств не было, а репутация в отряде эльфов была безнадежно испорчена.",
             "ending": "Без доказательств"
         },
 
         "eleas_fail": {
-            "art": "art/eleas_liar.png",
-            "music": "audio/eleas.mp3",
+            "art": "art/eleas_liar.webp",
+            "music": "audio/eleas.m4a",
             "text": "— Ты не смог справиться с какой-то шлюхой из подземелья? — скривился Элеас. — Бесполезный мутант.\n\nОн развернулся и ушел, не заплатив ни гроша. Впрочем, глядя на его безумные глаза, Геральт понял, что это дело далеко не закончено.",
             "ending": "Провал задания"
         },
 
         "succubus_attacks": {
-            "art": "art/succubus_attacks.png",
-            "music": "audio/fight.mp3",
+            "art": "art/succubus_attacks.webp",
+            "music": "audio/fight.m4a",
             "text": "— Я тебе не верю, демон.\n\nГеральт выхватил серебряный меч. Суккуб с шипением бросилась в атаку. Начался смертельный танец клинков и магии. Ведьмаку нужно парировать удары (или уклоняться), чтобы победить.",
             "type": "combat",
             "winNode": "succubus_defeated",
@@ -285,8 +285,8 @@
         },
 
         "succubus_defeated": {
-            "art": "art/succubus_defeated.png",
-            "music": "audio/mystical.mp3",
+            "art": "art/succubus_defeated.webp",
+            "music": "audio/mystical.m4a",
             "text": "Последний, идеально выверенный удар Геральта оказался роковым. Суккуб с протяжным вздохом осела на пол своего роскошного логова. Ведьмак не спеша вытер серебряный клинок, отрезал прядь ее волос в качестве доказательства и направился к выходу.\n\nДело сделано. Пора было навестить заказчика.",
             "choices": [
                 { "text": "Пойти к Элеасу", "next": "bring_trophy" } 
@@ -294,16 +294,16 @@
         },
 
         "death_ending": {
-            "art": "art/death_ending.png",
-            "music": "audio/death.mp3",
+            "art": "art/death_ending.webp",
+            "music": "audio/death.m4a",
             "musicStart": 66,
             "text": "Суккуб оказалась слишком быстрой. Очередной удар когтей вспорол Геральту горло. Ведьмак рухнул на холодный каменный пол. История закончилась здесь.",
             "ending": "Смерть в логове"
         },
 
         "bring_trophy": {
-            "art": "art/eleas_liar.png",
-            "music": "audio/eleas.mp3",
+            "art": "art/eleas_liar.webp",
+            "music": "audio/eleas.m4a",
             "text": "Элеас с довольной ухмылкой принял доказательство смерти суккуба. Он отсчитал обещанную плату и, поколебавшись, протянул Геральту старинный эльфийский меч. Убийца был «наказан», а настоящий виновник смертей так и остался гулять на свободе.",
             "effects": { "gold": 100, "reputation": -1 },
             "ending": "Слепое правосудие"

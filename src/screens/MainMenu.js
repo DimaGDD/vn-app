@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, Pressable, Platform, BackHandler } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Platform, BackHandler, useWindowDimensions } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { createAudioPlayer } from 'expo-audio';
 
@@ -9,17 +9,24 @@ import { FONT_FAMILY, BASE } from '../api/config';
 export default function MainMenu({ onStart, volume, setVolume }) {
     const playerRef = useRef(null);
 
+    const { width, height } = useWindowDimensions();
+    const isSmallScreen = width > height && height < 500;
+
     useEffect(() => {
-        const player = createAudioPlayer({ uri: `${BASE}/audio/main_menu.mp3` });
+        const player = createAudioPlayer({ uri: `${BASE}/audio/main_menu.m4a` });
         player.loop = true;
         player.volume = volume;
 
-        player.play();
+        try { player.play(); } catch (e) {}
         playerRef.current = player;
 
         return () => {
             if (playerRef.current) {
-                playerRef.current.remove();
+                try {
+                    playerRef.current.pause();
+                    playerRef.current.remove();
+                } catch (e) {}
+
                 playerRef.current = null;
             }
         };
@@ -37,7 +44,11 @@ export default function MainMenu({ onStart, volume, setVolume }) {
 
     const handleStartGame = () => {
         if (playerRef.current) {
-            playerRef.current.remove();
+            try {
+                playerRef.current.pause();
+                playerRef.current.remove();
+            } catch (e) {}
+
             playerRef.current = null;
         }
 
@@ -52,13 +63,13 @@ export default function MainMenu({ onStart, volume, setVolume }) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.content}>
-                <Text style={styles.title}>ВЕДЬМАК</Text>
-                <Text style={styles.subtitle}>С трепещущим сердцем</Text>
+            <View style={[styles.content, isSmallScreen && styles.contentLandscape]}>
+                <Text style={[styles.title, isSmallScreen && styles.titleLandscape]}>ВЕДЬМАК</Text>
+                <Text style={[styles.subtitle, isSmallScreen && styles.subtitleLandscape]}>С трепещущим сердцем</Text>
 
                 <View style={styles.buttonContainer}>
                     <Pressable 
-                        style={({ pressed }) => [styles.btn, pressed && styles.pressed]} 
+                        style={({ pressed }) => [styles.btn, isSmallScreen && styles.btnLandscape, pressed && styles.pressed]} 
                         onPress={handleStartGame}
                     >
                         <Text style={styles.btnText}>Начать игру</Text>
@@ -66,7 +77,7 @@ export default function MainMenu({ onStart, volume, setVolume }) {
 
                     {Platform.OS === 'android' && (
                         <Pressable 
-                            style={({ pressed }) => [styles.btn, pressed && styles.pressed]} 
+                            style={({ pressed }) => [styles.btn, isSmallScreen && styles.btnLandscape, pressed && styles.pressed]} 
                             onPress={handleExit}
                         >
                             <Text style={styles.btnText}>Выйти</Text>
@@ -74,7 +85,7 @@ export default function MainMenu({ onStart, volume, setVolume }) {
                     )}
                 </View>
 
-                <View style={styles.volumeContainer}>
+                <View style={[styles.volumeContainer, isSmallScreen && styles.volumeContainerLandscape]}>
                     <Text style={styles.volumeIcon}>{volume === 0 ? '🔇' : volume < 0.5 ? '🔉' : '🔊'}</Text>
 
                     <Slider 
@@ -106,6 +117,9 @@ const styles = StyleSheet.create({
         maxWidth: 400,
         padding: 20,
     },
+    contentLandscape: {
+        padding: 10,
+    },
     title: {
         color: '#C5A059',
         fontSize: 56,
@@ -117,12 +131,21 @@ const styles = StyleSheet.create({
         textShadowOffset: { width: 0, height: 2 },
         textShadowRadius: 15,
     },
+    titleLandscape: {
+        fontSize: 36,
+        letterSpacing: 4,
+        marginBottom: 0,
+    },
     subtitle: {
         color: '#888',
         fontSize: 20,
         fontFamily: "Cinzel_700Bold",
         marginBottom: 60,
         fontStyle: 'italic',
+    },
+    subtitleLandscape: {
+        fontSize: 14,
+        marginBottom: 15,
     },
     buttonContainer: {
         width: '100%',
@@ -135,6 +158,10 @@ const styles = StyleSheet.create({
         borderColor: '#4a4a5a',
         marginBottom: 15,
         alignItems: 'center',
+    },
+    btnLandscape: {
+        paddingVertical: 10,
+        marginBottom: 10,
     },
     pressed: {
         backgroundColor: '#2a2a3d',
@@ -152,6 +179,9 @@ const styles = StyleSheet.create({
         marginTop: 30,
         width: '100%',
         paddingHorizontal: 20
+    },
+    volumeContainerLandscape: {
+        marginTop: 10,
     },
     volumeIcon: {
         fontSize: 24,

@@ -72,7 +72,11 @@ export default function NovelScreen({ onExitGame, volume }) {
 
     const handleExit = () => {
         if (playerRef.current) {
-            playerRef.current.remove();
+            try {
+                playerRef.current.pause();
+                playerRef.current.remove();
+            } catch (e) {}
+
             playerRef.current = null;
         }
 
@@ -86,7 +90,11 @@ export default function NovelScreen({ onExitGame, volume }) {
         if (currentTrack === node.music) return;
 
         if (playerRef.current) {
-            playerRef.current.remove();
+            try {
+                playerRef.current.pause();
+                playerRef.current.remove();
+            } catch (e) {}
+
             playerRef.current = null;
         }
 
@@ -117,7 +125,12 @@ export default function NovelScreen({ onExitGame, volume }) {
     useEffect(() => {
         return () => {
             if (playerRef.current) {
-                playerRef.current.remove();
+                try {
+                    playerRef.current.pause();
+                    playerRef.current.remove();
+                } catch (e) {}
+
+                playerRef.current = null;
             }
         };
     }, []);
