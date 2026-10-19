@@ -42,6 +42,12 @@ export default function StatusBar({ state, onExit }) {
                 <Text style={[styles.value, !state.hasBook && styles.inactive]}>{state.hasBook ? '📖' : '—'}</Text>
             </View>
 
+            <View style={styles.statBox}>
+                <Text style={[styles.value, !state.hasSwallow && styles.inactive]}>
+                    {state.hasSwallow ? '🧪' : '—'}
+                </Text>
+            </View>
+            
         </View>
     );
 }

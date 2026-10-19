@@ -8,6 +8,8 @@ export const initialState = {
     hasSplinter: false,
     hasBook: false,
     failedPoem: false,
+    hasSwallow: false,
+    tookMoney: false,
 };
 
 export function applyEffects(state, effects = {}) {

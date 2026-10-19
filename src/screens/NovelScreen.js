@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, ActivityIndicator, Platform, useWindowDimensions } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, ActivityIndicator, useWindowDimensions, AppState } from 'react-native';
 import { loadStory } from '../api/storyLoader';
 import { initialState, applyEffects, checkCondition } from '../state/gameState';
 import { createAudioPlayer } from 'expo-audio';
@@ -29,6 +29,8 @@ export default function NovelScreen({ onExitGame, volume }) {
     const playerRef = useRef(null);
     const [currentTrack, setCurrentTrack] = useState(null);
 
+    const lastNodeEffectsRef = useRef(null);
+
     let artWidth, artHeight, textWidth;
 
     if (isLandscape) {
@@ -46,23 +48,24 @@ export default function NovelScreen({ onExitGame, volume }) {
         textWidth = containerWidth - artWidth - 20;
     }
 
-    const confirmExit = () => {
-        onExitGame();
-    }
-
     function takeDamage(amount) {
         setState((s) => applyEffects(s, { hp: -amount }));
     }
 
-    async function bootstrap(force = false) {
+    function usePotion() {
+        setState((s) => applyEffects(s, { hp: 20, hasSwallow: false }));
+    }
+
+    async function bootstrap() {
         setLoading(true);
         setError(null);
         try {
-            const { story, version } = await loadStory({ forceRefresh: force });
+            const { story, version } = await loadStory({ forceRefresh: true });
             setStory(story);
             setVersion(version);
             setNodeId(story.start);
             setState(initialState);
+            lastNodeEffectsRef.current = null;
         } catch (e) {
             setError('Не удалось загрузить сюжет.');
         } finally {
@@ -136,16 +139,60 @@ export default function NovelScreen({ onExitGame, volume }) {
     }, []);
 
     useEffect(() => {
-        bootstrap(true);
+        if (!story || !nodeId) return;
+
+        const node = story.nodes[nodeId];
+
+        if (node && node.effects) {
+            if (lastNodeEffectsRef.current !== nodeId) {
+                setState((s) => applyEffects(s, node.effects));
+                lastNodeEffectsRef.current = nodeId;
+            }
+        }
+    }, [nodeId, story]);
+
+    useEffect(() => {
+        bootstrap();
     }, []);
 
     useEffect(() => {
-        const onFocus = () => bootstrap(true);
+        const checkForUpdates = async () => {
+            if (loading || !story) return;
+
+            try {
+                const result = await loadStory({ forceRefresh: true });
+
+                if (result.version !== version) {
+                    setStory(result.story);
+                    setVersion(result.version);
+                    setNodeId(result.story.start);
+                    setState(initialState);
+                }
+            } catch (e) {
+
+            }
+        };
+
+        const onFocus = () => checkForUpdates();
+
         if (typeof window !== 'undefined' && window.addEventListener) {
             window.addEventListener('focus', onFocus);
-            return () => window.removeEventListener('focus', onFocus);
         }
-    }, []);
+
+        const subscription = AppState.addEventListener('change', nextAppState => {
+            if (nextAppState === 'active') {
+                checkForUpdates();
+            }
+        });
+
+        return () => {
+            if (typeof window !== 'undefined' && window.removeEventListener) {
+                window.removeEventListener('focus', onFocus);
+            }
+
+            subscription.remove();
+        };
+    }, [version, loading, story]);
 
     if (loading) {
         return (
@@ -159,7 +206,7 @@ export default function NovelScreen({ onExitGame, volume }) {
         return (
             <View style={styles.center}>
                 <Text style={styles.err}>{error}</Text>
-                <ChoiceButton label="Повторить" onPress={() => bootstrap(true)} />
+                <ChoiceButton label="Повторить" onPress={() => bootstrap()} />
                 <ChoiceButton label="Выйти в меню" onPress={onExitGame} />
             </View>
         );
@@ -180,8 +227,9 @@ export default function NovelScreen({ onExitGame, volume }) {
     );
 
     function go(nextId, extraEffects) {
-        setState((s) => 
-            applyEffects(s, { ...(node.effects || {}), ...(extraEffects || {}) }));
+        if (extraEffects) {
+            setState((s) => applyEffects(s, extraEffects));
+        }
         setNodeId(nextId);
     }
 
@@ -230,6 +278,8 @@ export default function NovelScreen({ onExitGame, volume }) {
                                 onDamage={takeDamage}
                                 onWin={() => go(node.winNode)}
                                 onLose={() => go(node.loseNode)}
+                                hasSwallow={state.hasSwallow}
+                                onUsePotion={usePotion}
                             />
                         ) : (
                             <View style={styles.choicesContainer}>

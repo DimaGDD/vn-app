@@ -5,11 +5,10 @@ import ChoiceButton from './ChoiceButton';
 const FONT_FAMILY = Platform.OS === 'ios' ? 'Georgia' : 'serif';
 const ATTACKS = ['top', 'bottom', 'left', 'right', 'magic'];
 
-export default function CombatScreen({ hp, onDamage, onWin, onLose }) {
+export default function CombatScreen({ hp, onDamage, onWin, onLose, hasSwallow, onUsePotion }) {
     const [attack, setAttack] = useState(null);
     const [parries, setParries] = useState(0);
 
-    // Выбираем случайную атаку при старте
     useEffect(() => {
         nextAttack();
     }, []);
@@ -23,7 +22,6 @@ export default function CombatScreen({ hp, onDamage, onWin, onLose }) {
         let isCorrect = false;
         let isParry = false;
 
-        // Логика по твоему ТЗ
         if (attack === 'magic' && action === 'quen') isCorrect = true;
         if (attack === 'bottom' && action === 'dodge') isCorrect = true;
         if (attack === 'top' && action === 'parry') { isCorrect = true; isParry = true; }
@@ -36,25 +34,29 @@ export default function CombatScreen({ hp, onDamage, onWin, onLose }) {
             if (isParry) {
                 const newParries = parries + 1;
                 setParries(newParries);
+
                 if (newParries >= 5) {
-                    onWin(); // Победа!
+                    onWin();
                     return;
                 }
             }
-            nextAttack(); // Успешное действие, бьет снова
+
+            nextAttack();
+
         } else {
-            onDamage(20); // Ошибка, отнимаем 20 хп
+            onDamage(20);
+
             if (hp - 20 <= 0) {
-                onLose(); // Смерть
+                onLose();
                 return;
             }
-            nextAttack(); // Даже если ошибся, суккуб бьет снова
+
+            nextAttack();
         }
     }
 
     if (!attack) return null;
 
-    // Красивое описание атаки для игрока
     let attackText = "";
     if (attack === 'top') attackText = "Суккуб заносит когти для удара сверху!";
     if (attack === 'bottom') attackText = "Суккуб делает подсечку снизу!";
@@ -66,6 +68,17 @@ export default function CombatScreen({ hp, onDamage, onWin, onLose }) {
         <View style={styles.container}>
             <Text style={styles.enemyText}>{attackText}</Text>
             <Text style={styles.parryText}>Парировано: {parries} / 5</Text>
+
+            {hasSwallow && hp < 100 && (
+                <View style={{ marginBottom: 15 }}>
+                    <ChoiceButton
+                        label={`Выпить "Ласточку"`}
+                        onPress={() => {
+                            onUsePotion();
+                        }}
+                    />
+                </View>
+            )}
 
             <View style={styles.buttonsContainer}>
                 <ChoiceButton label="Парировать (Меч)" onPress={() => handleAction('parry')} />
